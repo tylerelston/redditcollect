@@ -14,12 +14,13 @@ query = 'free' # keyword to search for
 sortBy = 'top' # sort by top,hot,new,controversial, relevance
 limited = None # amount of results to limit the search to
 minScore = 0 # minimum score of post
+minComments = 0 # minimum comments on post
 out = 'results.txt' # file to store output
 
 posts = []
 for submission in subreddit.search(query, sort=sortBy, limit=limited):
-    if submission.score >= minScore:
-        p = '[{}] {} {}'.format(str(submission.score), submission.title, submission.url)
+    if submission.score >= minScore and submission.num_comments >= minComments:
+        p = '[{}] {} {}'.format(str(submission.score), submission.title, submission.shortlink)
         posts.append(p)
     
 print('Collected',str(len(posts)),'posts.')
